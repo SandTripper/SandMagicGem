@@ -1,144 +1,138 @@
-package cn.sandtripper.minecraft.autostopserver;
+package cn.sandtripper.minecraft.sandmagicgem;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandHandler implements CommandExecutor {
-    public CommandHandler(JavaPlugin plugin) {
+    private final SandMagicGem plugin;
+
+    public CommandHandler(SandMagicGem plugin) {
         this.plugin = plugin;
-        this.messageConfigReader = new ConfigReader(plugin, "message.yml");
-        this.messageConfig = this.messageConfigReader.getConfig();
-        this.config = plugin.getConfig();
-        this.isCancel = false;
-        this.isStopping = false;
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (strings.length == 1 && strings[0].equals("stop")) {
-            stop(commandSender);
-        } else if (strings.length == 2 && strings[0].equals("stop")) {
-            try {
-                int countdown = Integer.parseInt(strings[1]);
-                stopWithCountdown(commandSender, countdown);
-            } catch (Exception e) {
-                commandSender.sendMessage(colorFormat(messageConfig.getString("plugin-prefix") + " " + messageConfig.getString("invalid-arguments-message")));
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
+        if (args.length == 0) {
+            commandSender.sendMessage(plugin.messageManager.instructionFormatError);
+            return true;
+        } else if (args[0].equals("reload")) {
+            if (args.length == 1) {
+                long startTime = System.currentTimeMillis();
+                plugin.reload();
+                long endTime = System.currentTimeMillis();
+                commandSender.sendMessage(String.format(plugin.messageManager.reloadSuccess, endTime - startTime));
+                return true;
             }
-        } else if (strings.length == 1 && strings[0].equals("cancel")) {
-            cancel(commandSender);
-        } else if (strings.length == 1 && strings[0].equals("reload")) {
-            reload(commandSender);
-        } else {
-            help(commandSender);
+        } else if (args[0].equals("help")) {
+            if (args.length == 1) {
+                for (String message : plugin.messageManager.helps) {
+                    commandSender.sendMessage(message);
+                }
+                return true;
+            }
+        } else if (args[0].equals("give")) {
+            if (args.length == 4) {
+                Player player = plugin.getServer().getPlayer(args[1]);
+                if (player == null) {
+                    commandSender.sendMessage(plugin.messageManager.playerNotExist);
+                    return true;
+                }
+                if (!player.isOnline()) {
+                    commandSender.sendMessage(plugin.messageManager.playerNotOnline);
+                    return true;
+                }
+                int level = 0;
+                try {
+                    level = Integer.parseInt(args[3]);
+                } catch (NumberFormatException e) {
+                    commandSender.sendMessage(plugin.messageManager.instructionFormatError);
+                    return true;
+                }
+                String display = args[2];
+                plugin.backpackManager.giveItemsToPlayer(player, Arrays.asList(plugin.gemManager.getGemItemStackByDisplay(display, level)));
+                commandSender.sendMessage(plugin.messageManager.itemGiveSuccess);
+                return true;
+            }
+        } else if (args[0].equals("giveallgems")) {
+            if (args.length == 3) {
+                Player player = plugin.getServer().getPlayer(args[1]);
+                if (player == null) {
+                    commandSender.sendMessage(plugin.messageManager.playerNotExist);
+                    return true;
+                }
+                if (!player.isOnline()) {
+                    commandSender.sendMessage(plugin.messageManager.playerNotOnline);
+                    return true;
+                }
+                int level = 0;
+                try {
+                    level = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    commandSender.sendMessage(plugin.messageManager.instructionFormatError);
+                    return true;
+                }
+                List<ItemStack> items = plugin.gemManager.getAllGemItemStacks(level);
+                plugin.backpackManager.giveItemsToPlayer(player, items);
+                commandSender.sendMessage(plugin.messageManager.itemGiveSuccess);
+                return true;
+            }
+        } else if (args[0].equals("station")) {
+
+            if (args.length == 2) {
+                if (commandSender instanceof Player) {
+                    Player player = (Player) commandSender;
+                    switch (args[1]) {
+                        case "gemsetting":
+                            plugin.backpackManager.giveItemsToPlayer(player, Arrays.asList(plugin.stationManager.getGemSettingItemStack()));
+                            return true;
+                    }
+                } else {
+                    commandSender.sendMessage(plugin.messageManager.requirePlayerExecutionIdentity);
+                    return true;
+                }
+
+            }
+        } else if (args[0].equals("open")) {
+            if (args.length == 2) {
+                if (commandSender instanceof Player) {
+                    Player player = (Player) commandSender;
+                    switch (args[1]) {
+                        case "gemsetting":
+                            plugin.guiManager.openGemstoneSettingInventory(player);
+                            return true;
+                    }
+                } else {
+                    commandSender.sendMessage(plugin.messageManager.requirePlayerExecutionIdentity);
+                    return true;
+                }
+
+            } else if (args.length == 3) {
+                Player player = plugin.getServer().getPlayer(args[2]);
+                if (player == null) {
+                    commandSender.sendMessage(plugin.messageManager.playerNotExist);
+                    return true;
+                }
+                if (!player.isOnline()) {
+                    commandSender.sendMessage(plugin.messageManager.playerNotOnline);
+                    return true;
+                }
+                switch (args[1]) {
+                    case "gemsetting":
+                        plugin.guiManager.openGemstoneSettingInventory(player);
+                        commandSender.sendMessage(plugin.messageManager.successOpenPlayerGui);
+                        return true;
+                }
+            }
         }
+        commandSender.sendMessage(plugin.messageManager.instructionFormatError);
         return true;
     }
 
-    private void stop(CommandSender commandSender) {
-        stopWithCountdown(commandSender, config.getInt("countdown"));
-    }
-
-    private void stopWithCountdown(CommandSender commandSender, int countdown) {
-        if (isStopping) {
-            commandSender.sendMessage(colorFormat(messageConfig.getString("plugin-prefix") + " " + messageConfig.getString("stopping-message")));
-            return;
-        }
-        isStopping = true;
-        new BukkitRunnable() {
-            int _countdown = countdown;
-            List<Integer> remindTimes = config.getIntegerList("remind-times");
-
-            @Override
-            public void run() {
-                if (!isCancel) {
-
-                    for (int i = 0; i < remindTimes.size(); i++) {
-                        if (remindTimes.get(i) == _countdown) {
-                            broadcastStopTitle(_countdown);
-                            broadcastStopMessage(_countdown);
-                        }
-                    }
-                    if (_countdown == 0) {
-                        Bukkit.getServer().shutdown();
-                    }
-                    _countdown -= 1;
-                } else {
-                    broadcastCancelTitle();
-                    broadcastCancelMessage();
-                    isCancel = false;
-                    isStopping = false;
-                    this.cancel();
-                }
-            }
-        }.runTaskTimer(plugin, 0L, 20L);
-    }
-
-    private void cancel(CommandSender commandSender) {
-        if (!isStopping) {
-            commandSender.sendMessage(colorFormat(messageConfig.getString("plugin-prefix") + " " + messageConfig.getString("nothing-to-cancel")));
-        } else {
-            isCancel = true;
-        }
-    }
-
-    private void reload(CommandSender commandSender) {
-        plugin.saveDefaultConfig();
-        plugin.reloadConfig();
-        messageConfigReader.saveDefaultConfig();
-        messageConfigReader.reloadConfig();
-        config = plugin.getConfig();
-        messageConfig = messageConfigReader.getConfig();
-        ((AutoStopServer) plugin).timer.reload();
-        commandSender.sendMessage(colorFormat(messageConfig.getString("plugin-prefix") + " " + messageConfig.getString("plugin-reloaded-message")));
-    }
-
-    private void help(CommandSender commandSender) {
-        List<String> helpCommandMessages = messageConfig.getStringList("help-command-message");
-        for (int i = 0; i < helpCommandMessages.size(); i++) {
-            commandSender.sendMessage(colorFormat(helpCommandMessages.get(i)));
-        }
-    }
-
-    private void broadcastCancelTitle() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendTitle(colorFormat(messageConfig.getString("message-prefix")), colorFormat(messageConfig.getString("shutdown-cancelled-message")), 10, 70, 20);
-        }
-    }
-
-    private void broadcastCancelMessage() {
-        Bukkit.broadcastMessage(colorFormat(messageConfig.getString("message-prefix")) + " " + colorFormat(messageConfig.getString("shutdown-cancelled-message")));
-    }
-
-    private void broadcastStopTitle(int countdown) {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendTitle(colorFormat(messageConfig.getString("message-prefix")), colorFormat(messageConfig.getString("shutdown-message")).replace("{TIME}", String.valueOf(countdown)), 10, 70, 20);
-        }
-    }
-
-    private void broadcastStopMessage(int countdown) {
-        Bukkit.broadcastMessage(colorFormat(messageConfig.getString("message-prefix")) + " " + colorFormat(messageConfig.getString("shutdown-message")).replace("{TIME}", String.valueOf(countdown)));
-    }
-
-    private String colorFormat(String message) {
-        if (message == null) {
-            return "";
-        }
-        return message.replace("&", "§");
-    }
-
-    private boolean isCancel;
-    private boolean isStopping;
-    private JavaPlugin plugin;
-    private FileConfiguration config;
-    private FileConfiguration messageConfig;
-    private ConfigReader messageConfigReader;
 
 }

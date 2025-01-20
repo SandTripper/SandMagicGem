@@ -1,6 +1,13 @@
 name: SandMagicGem
 version: '${project.version}'
 main: cn.sandtripper.minecraft.sandmagicgem.SandMagicGem
-api-version: '1.20'
-authors: [SandTripper]
+api-version: '1.13'
+authors: [ SandTripper ]
 description: 魔术宝石
+commands:
+  SandMagicGem:
+    description: '使用/gem help查看插件帮助'
+    usage: /gem help
+    aliases: [ smg, magicgem, mgem, gem ]
+    permission: SandMagicGem.admin
+    permission-message: You don't have permission to perform this command.

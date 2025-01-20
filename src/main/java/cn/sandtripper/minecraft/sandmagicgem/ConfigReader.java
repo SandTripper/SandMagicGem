@@ -1,4 +1,4 @@
-package cn.sandtripper.minecraft.autostopserver;
+package cn.sandtripper.minecraft.sandmagicgem;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,6 +10,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class ConfigReader {
+    private final JavaPlugin plugin;
+    private final String configName;
+    private File configFile;
+    private FileConfiguration config;
+
     public ConfigReader(JavaPlugin plugin, String filename) {
         this.plugin = plugin;
         this.configName = filename;
@@ -51,9 +56,4 @@ public class ConfigReader {
             Bukkit.getLogger().warning("配置保存失败!请重试!");
         }
     }
-
-    private File configFile;
-    private final JavaPlugin plugin;
-    private final String configName;
-    private FileConfiguration config;
 }

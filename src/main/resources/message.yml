@@ -1,0 +1,32 @@
+# 插件前缀
+prefix: "&x&f&f&5&5&f&f[&x&d&d&5&5&f&f魔&x&b&b&5&5&f&f沙&x&9&9&5&5&f&f宝&x&7&7&5&5&f&f石&x&5&5&5&5&f&f] "
+
+# 关闭台时背包满
+backpack-full-things-fall-on-ground: "&e你的背包已满，一些物品掉在地上了！"
+
+instruction-format-error: "&e指令格式错误！输入 /gem help查看"
+
+item-give-success: "&a成功给予玩家道具"
+
+success-open-player-gui: "&a成功为玩家打开GUI"
+
+require-player-execution-identity: "&e需要作为玩家身份执行该命令"
+
+player-not-online: "&e玩家不在线!"
+
+player-not-exist: "&e玩家不存在!"
+
+reload-success: "&a插件重载成功，重载用时%dms"
+
+amount-error: "&e装备或宝石数量需要为1，您现在数量超过1!"
+
+no-verification: "&e插件未验证，该功能被禁用，请联系服主或者管理员"
+
+helps:
+  - "&d<------------- 魔沙宝石指令 ------------->"
+  - "&d/gem reload 重载插件"
+  - "&d/gem give <玩家> <宝石名字> <等级> 给予玩家宝石"
+  - "&d/gem giveallgem <玩家> <等级> 给予玩家所有宝石"
+  - "&d/gem station <工作站名字> 给予自己工作站方块"
+  - "&d/gem open <工作站名字> <玩家> 为玩家打开工作站GUI"
+  - "&d如果未填写玩家则为自己打开"

@@ -1,0 +1,155 @@
+# 不要修改
+version: 1.0
+
+#wiki: https://plugin.sandtripper.cn/SandMagicGem/
+
+#附魔宝石配置
+enchant-configs:
+  #除了宝石URL, 其他的项修改后无法识别旧宝石
+  fortune: #请勿修改此键
+    #普通品质最高附魔等级
+    max-normal-level: 5
+    #稀有品质最高附魔等级
+    max-rare-level: 7
+    #史诗品质最高附魔等级
+    max-epic-level: 10
+    #附魔描述，不建议修改
+    display: "时运"
+    color: "&x&7&E&F&F&0&0"
+    #宝石URL
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhhNWE1ZDdmMTM1NTRiN2Q4OGQyNzY2ZTlhM2FmZTI3YTY4YTU2MmIxOWNmYzRkODQxYjAxMWZmZmQ3MTkzNiJ9fX0='
+
+  efficiency: #请勿修改此键
+    max-normal-level: 6
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "效率"
+    color: "&x&A&7&0&0&F&F"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjMwNzg1ZGU1MGFhY2I3ZGU1MDgwZDk3Yjc1MDhlMWUzNDBjODg2OTczZmEzOWMwODAxYWE3YmY2MWM0YTQ5MSJ9fX0='
+
+  looting:
+    max-normal-level: 5
+    max-rare-level: 7
+    max-epic-level: 10
+    display: "抢夺"
+    color: "&x&7&E&F&F&0&0"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhhNWE1ZDdmMTM1NTRiN2Q4OGQyNzY2ZTlhM2FmZTI3YTY4YTU2MmIxOWNmYzRkODQxYjAxMWZmZmQ3MTkzNiJ9fX0='
+
+  power:
+    max-normal-level: 7
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "力量"
+    color: "&x&F&F&2&8&2&8"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmY2MGRlNWIzNGJkY2IxYzI1MmY0N2NiY2FkNDFmZWE2YTUwZTA1M2Q3OTVjNGFmM2RmODFlYjM5MTAwMjllNCJ9fX0='
+
+  protection:
+    max-normal-level: 7
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "保护"
+    color: "&x&E&4&0&0&A&D"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDNlZDc0MDBkYTVmZDM5NTI3ODIxNzMyNzg4MjQ2Njc0ZjUzMzBlNjkyZTE2MzZmMGQ3MGZjZGJkMzI1YTJlYyJ9fX0='
+
+  sharpness:
+    max-normal-level: 7
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "锋利"
+    color: "&x&F&F&2&8&2&8"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmY2MGRlNWIzNGJkY2IxYzI1MmY0N2NiY2FkNDFmZWE2YTUwZTA1M2Q3OTVjNGFmM2RmODFlYjM5MTAwMjllNCJ9fX0='
+
+  thorns:
+    max-normal-level: 5
+    max-rare-level: 7
+    max-epic-level: 10
+    display: "荆棘"
+    color: "&x&3&D&D&3&F&2"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWI1MzRkMjA3ZjhhZjNmMzBjZDc0MzU1MGNlYzdkYWNkMzRjZWJjZDY0ZGM0Mjk2MzZhYjgyZWZjMWNiZTQ3MCJ9fX0='
+
+  unbreaking:
+    max-normal-level: 5
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "耐久"
+    color: "&x&A&8&A&8&A&8"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjA5Zjc1OTJjMjkzZDEyMjk1NmMyMTk1ODZkZTM0YWIwOTc0MTc2MWQ5MWEwY2QwNTFiNDUyOGUzMDkzOTE2MCJ9fX0='
+
+  bane_of_arthropods:
+    max-normal-level: 7
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "节肢杀手"
+    color: "&x&2&0&2&0&2&0"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTRhN2FlNjY1OGFjZjg5MzNlN2FmNTdmOTViMDc1YWMzNmE2NDI0OWViMGJjYzgzMGI5OTVkYjgwMDE3OWQ0NyJ9fX0='
+
+  smite:
+    max-normal-level: 7
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "亡灵杀手"
+    color: "&x&2&0&2&0&2&0"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTRhN2FlNjY1OGFjZjg5MzNlN2FmNTdmOTViMDc1YWMzNmE2NDI0OWViMGJjYzgzMGI5OTVkYjgwMDE3OWQ0NyJ9fX0='
+
+  sweeping:
+    max-normal-level: 5
+    max-rare-level: 10
+    max-epic-level: 20
+    display: "横扫之刃"
+    color: "&x&F&F&9&B&0&0"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTYwOGI2OGRiYWJmZmE3NTk1M2JkZDBhNzg1YjIzZGFlOTNjMDY0MzBlNDE1OWZiOTFmM2UzZmNmZDgzZmNlZiJ9fX0='
+
+other-configs:
+  unbreakable:
+    display: "无法破坏"
+    color: "&x&2&3&F&F&0&5"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzFlZWI0NzU0OWI2NzdiYTFmNTU4MmE1NTliMjIxMDhhNDUxYzFlYjBmMTMzZDY0MmVkY2U1ZWMwOWVhZjI5MiJ9fX0='
+  clear_repair_cost:
+    display: "清除铁砧惩罚"
+    color: "&x&E&B&7&7&0&B"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI4ZTU2YjM0NjdmNDI0YWU5NDM1YmJjZTc2NDYxNDg1NDY3ZmRlMjE5YmM1NGJmZDRmZGExMTkwY2NkMWZmZiJ9fX0='
+
+
+#属性宝石配置，未开发完
+attribute-configs:
+  generic_movement_speed:
+    max-normal-value: 5
+    max-rare-value: 7
+    max-epic-value: 10
+    step: 1
+    display: "移动速度"
+    color: "&x&0&9&8&6&A&A"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTRlNzE2NzFkYjVmNjlkMmM0NmEwZDcyNzY2YjI0OWMxMjM2ZDcyNjc4MmMwMGEwZTIyNjY4ZGY1NzcyZDRiOSJ9fX0='
+  generic_attack_damage:
+    max-normal-value: 5
+    max-rare-value: 7
+    max-epic-value: 10
+    step: 1
+    display: "攻击伤害"
+    color: "&x&E&F&0&F&0&0"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzIwZWYwNmRkNjA0OTk3NjZhYzhjZTE1ZDJiZWE0MWQyODEzZmU1NTcxODg2NGI1MmRjNDFjYmFhZTFlYTkxMyJ9fX0='
+  generic_attack_speed:
+    max-normal-value: 5
+    max-rare-value: 7
+    max-epic-value: 10
+    step: 5
+    display: "攻击速度"
+    color: "&x&E&F&6&B&0&0"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWFjZTZiYjNhYTRjY2FjMDMxMTY4MjAyZjZkNDUzMjU5N2JjYWM2MzUxMDU5YWJkOWQxMGIyODYxMDQ5M2FlYiJ9fX0='
+  generic_armor:
+    max-normal-value: 5
+    max-rare-value: 7
+    max-epic-value: 10
+    step: 1
+    display: "护甲值"
+    color: "&x&E&2&2&2&C&6"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTZiMTBkMDkzMzBlMGY3MDA4MTVlNGQwNmU2NmI1ZDc2Nzc2NThiOWNhZDA4NTU1YmE3ZDg3YzEzYjI4OGQwZCJ9fX0='
+  generic_armor_toughness:
+    max-normal-value: 5
+    max-rare-value: 7
+    max-epic-value: 10
+    step: 1
+    display: "护甲韧性"
+    color: "&x&D&5&C&D&C&1"
+    head-url: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZThjZGU2NzAwMzcyMmRiODE4Mjk5YmNiZWM4ODMyODlkMThkYzkzMzJkZTgwOTgzNDAwYTg3ZjIwNTQ0MzkyYSJ9fX0='
+
