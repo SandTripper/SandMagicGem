@@ -49,7 +49,9 @@ public final class SandMagicGem extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        stationManager.disable();
+        if (stationManager != null) {
+            stationManager.disable();
+        }
     }
 
     public void reload() {

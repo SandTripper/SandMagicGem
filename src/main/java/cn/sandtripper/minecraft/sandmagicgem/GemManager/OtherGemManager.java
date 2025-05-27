@@ -159,26 +159,45 @@ public class OtherGemManager {
 
     private ItemStack makeItemStack(OtherGemData otherGemData) {
         ItemStack skullItem = new ItemStack(Material.PLAYER_HEAD);
-
-        // 获取SkullMeta
         SkullMeta skullMeta = (SkullMeta) skullItem.getItemMeta();
 
-        // 创建GameProfile对象
-        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-        profile.getProperties().put("textures", new Property("textures", otherGemData.headUrl));
-
-        // 利用反射设置SkullMeta的GameProfile属性
+        // 检查是否支持新版本的 setOwningPlayer 方法
+        boolean isNewVersion = false;
         try {
-            Field profileField = skullMeta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(skullMeta, profile);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            skullMeta.getClass().getMethod("setOwningPlayer", org.bukkit.entity.Player.class);
+            isNewVersion = true;
+        } catch (NoSuchMethodException e) {
+            isNewVersion = false;
+        }
+
+        if (isNewVersion) {
+            // 新版本使用 setOwningPlayer
+            skullMeta.setOwningPlayer(plugin.getServer().getOfflinePlayer(UUID.randomUUID()));
+        } else {
+            // 旧版本使用 GameProfile
+            try {
+                // 检查 profile 字段的类型
+                Field profileField = skullMeta.getClass().getDeclaredField("profile");
+                Class<?> profileType = profileField.getType();
+
+                if (profileType.getName().equals("com.mojang.authlib.GameProfile")) {
+                    // 旧版本 (1.20.4 及以下)
+                    GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+                    profile.getProperties().put("textures", new Property("textures", otherGemData.headUrl));
+                    profileField.setAccessible(true);
+                    profileField.set(skullMeta, profile);
+                } else {
+                    // 新版本 (1.21.4) 使用 setOwningPlayer 作为备选方案
+                    skullMeta.setOwningPlayer(plugin.getServer().getOfflinePlayer(UUID.randomUUID()));
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                // 如果反射失败，回退到 setOwningPlayer
+                skullMeta.setOwningPlayer(plugin.getServer().getOfflinePlayer(UUID.randomUUID()));
+            }
         }
 
         skullMeta.setDisplayName(otherGemData.name);
         skullMeta.setLore(otherGemData.lores);
-        // 应用SkullMeta到ItemStack
         skullItem.setItemMeta(skullMeta);
 
         return skullItem;

@@ -205,26 +205,36 @@ public class EnchantGemManager {
 
     private ItemStack makeItemStack(EnchantGemData enchantGemData) {
         ItemStack skullItem = new ItemStack(Material.PLAYER_HEAD);
-
-        // 获取SkullMeta
         SkullMeta skullMeta = (SkullMeta) skullItem.getItemMeta();
 
-        // 创建GameProfile对象
-        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-        profile.getProperties().put("textures", new Property("textures", enchantGemData.headUrl));
-
-        // 利用反射设置SkullMeta的GameProfile属性
+        // 检查是否支持新版本的 setOwningPlayer 方法
+        boolean isNewVersion = false;
         try {
-            Field profileField = skullMeta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(skullMeta, profile);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            skullMeta.getClass().getMethod("setOwningPlayer", org.bukkit.entity.Player.class);
+            isNewVersion = true;
+        } catch (NoSuchMethodException e) {
+            isNewVersion = false;
+        }
+
+        if (isNewVersion) {
+            // 新版本使用 setOwningPlayer
+            skullMeta.setOwningPlayer(plugin.getServer().getOfflinePlayer(UUID.randomUUID()));
+        } else {
+            // 旧版本使用 GameProfile
+            GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+            profile.getProperties().put("textures", new Property("textures", enchantGemData.headUrl));
+
+            try {
+                Field profileField = skullMeta.getClass().getDeclaredField("profile");
+                profileField.setAccessible(true);
+                profileField.set(skullMeta, profile);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
 
         skullMeta.setDisplayName(enchantGemData.name);
         skullMeta.setLore(enchantGemData.lores);
-        // 应用SkullMeta到ItemStack
         skullItem.setItemMeta(skullMeta);
 
         return skullItem;
